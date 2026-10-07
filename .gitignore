@@ -1,0 +1,10 @@
+.DS_Store
+
+# earlier design iterations, kept locally only
+index-v*.html
+
+# images not used by the current page
+assets/*
+!assets/logo.svg
+!assets/hero-2.jpg
+!assets/co-*.jpg

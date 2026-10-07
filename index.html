@@ -168,7 +168,7 @@
   .reel-media::before {
     content: ""; position: absolute; inset: -50%; z-index: 1; pointer-events: none;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    mix-blend-mode: overlay; opacity: .22;
+    mix-blend-mode: overlay; opacity: .4;
     animation: grain .9s steps(3) infinite;
   }
   @keyframes grain {
@@ -176,11 +176,6 @@
     33% { transform: translate(-3%, 2%); }
     66% { transform: translate(2%, -3%); }
     100% { transform: translate(0, 0); }
-  }
-  /* magazine-style caption */
-  .reel-caption {
-    position: absolute; top: clamp(16px, 2vw, 28px); left: clamp(18px, 2.4vw, 36px); z-index: 1;
-    color: rgba(255, 255, 255, .92); text-shadow: 0 1px 10px rgba(0, 0, 0, .25);
   }
   /* opens close on the façade, then pulls back to reveal the sky as the page scrolls */
   .reel img {
@@ -334,7 +329,6 @@
   <div class="showcase fade d2" aria-label="Sede do Grupo RAR">
     <div class="reel" data-reel>
       <div class="reel-media"><img src="assets/hero-2.jpg" alt="Sede do Grupo RAR no Porto"></div>
-      <span class="reel-caption label">Sede · Porto</span>
       <div class="meta">
         <div class="news">
           <div class="progress"><span data-progress></span></div>
@@ -559,7 +553,6 @@
     "Diversos setores, do Porto para o mundo. Mais de mil milhões de euros de volume de negócios.": "Diverse sectors, from Porto to the world. Over one billion euros in turnover.",
     "Conhecer o grupo": "Discover the group",
     "Destaques": "Highlights",
-    "Sede · Porto": "Headquarters · Porto",
     "Presença internacional": "Global presence",
     "7 centros de operação": "7 core hubs",
     "6 empresas": "6 companies",

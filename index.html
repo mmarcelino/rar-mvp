@@ -145,7 +145,8 @@
   .news .btns svg { width: 16px; height: 16px; }
   .progress { position: absolute; left: 0; right: 0; top: -1px; height: 1px; }
   .progress span { display: block; height: 100%; width: 0; background: #fff; }
-  .progress span.run { animation: fill var(--dur, 6s) linear forwards; }
+  /* the line runs across the three fields in turn at a steady speed (timings set in JS); the story changes when it starts over */
+  .progress span.run { animation-name: fill; animation-timing-function: linear; animation-fill-mode: forwards; }
   @keyframes fill { to { width: 100%; } }
 
   /* ---------- SHOWCASE ---------- */
@@ -296,6 +297,10 @@
     .headline { font-size: 12.2vw; }
     .co { grid-template-columns: 96px minmax(0, 1fr) 24px; }
   }
+  /* language switch: text fades and softens out, swaps, then fades back in */
+  .i18n { transition: opacity .32s ease, filter .32s ease; }
+  html.is-switching .i18n { opacity: 0; filter: blur(3px); }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
   }
@@ -322,7 +327,7 @@
     </h1>
     <div class="lede fade d1">
       <p>Diversos setores, do Porto para o mundo. Mais de mil milhões de euros de volume de negócios.</p>
-      <a href="https://www.rar.com/pt/mensagem-presidente/" class="text-link">Conhecer o grupo <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="#" class="text-link">Conhecer o grupo <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 
@@ -333,17 +338,19 @@
         <div class="news">
           <div class="progress"><span data-progress></span></div>
           <span class="label">(<b data-count>01</b>/02) <span>Destaques</span></span>
-          <a href="https://www.rar.com/pt/comunicados-imprensa/2025/" class="caption" data-caption>Grupo RAR com EBITDA de 68 milhões de euros</a>
+          <a href="#" class="caption" data-caption>Grupo RAR com EBITDA de 68 milhões de euros</a>
           <div class="btns">
             <button data-prev aria-label="Notícia anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
             <button data-next aria-label="Notícia seguinte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </div>
         </div>
         <div>
+          <div class="progress"><span data-progress></span></div>
           <span class="label">Presença internacional</span>
-          <a href="https://www.rar.com/pt/rar-no-mundo/" class="value">7 centros de operação</a>
+          <a href="#" class="value">7 centros de operação</a>
         </div>
         <div>
+          <div class="progress"><span data-progress></span></div>
           <span class="label">Portfólio</span>
           <a href="#empresas" class="value">6 empresas <svg class="arrow arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
         </div>
@@ -354,49 +361,49 @@
 
 <main>
   <section class="companies" id="empresas">
-    <div class="companies-head">
+    <div class="companies-head" data-scroll-anchor>
       <span class="eyebrow">Portfólio</span>
       <h2>Empresas do Grupo RAR</h2>
     </div>
     <div class="companies-body">
       <div>
         <ul class="company-list">
-      <li><a class="co" href="https://www.rar.com/pt/empresas/acembex/">
+      <li><a class="co" href="#">
         <span class="co-media"><img src="assets/co-acembex-lg.jpg" style="object-position: 12% 40%" alt="" loading="lazy"></span>
         <span class="label">Alimentar</span>
         <span class="name">Acembex</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Importação e distribuição de matérias-primas alimentares.</span></span></span>
       </a></li>
-      <li><a class="co" href="https://www.rar.com/pt/empresas/colep-consumer-products/">
+      <li><a class="co" href="#">
         <span class="co-media"><img src="assets/co-colep-cp-lg.jpg" alt="" loading="lazy"></span>
         <span class="label">Produtos de consumo</span>
         <span class="name">Colep Consumer Products</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Produção, por contrato, de produtos de cuidado pessoal e para a casa.</span></span></span>
       </a></li>
-      <li><a class="co" href="https://www.rar.com/pt/empresas/colep-packaging/">
+      <li><a class="co" href="#">
         <span class="co-media"><img src="assets/co-colep-pk-lg.jpg" alt="" loading="lazy"></span>
         <span class="label">Embalagem</span>
         <span class="name">Colep Packaging</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Embalagens metálicas e aerossóis para marcas de consumo.</span></span></span>
       </a></li>
-      <li><a class="co" href="https://www.rar.com/pt/empresas/rar-acucar/">
+      <li><a class="co" href="#">
         <span class="co-media"><img src="assets/co-rar-acucar-lg.jpg" alt="" loading="lazy"></span>
         <span class="label">Açúcar</span>
         <span class="name">RAR Açúcar</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Refinação e comercialização de açúcar em Portugal.</span></span></span>
       </a></li>
-      <li><a class="co" href="https://www.rar.com/pt/empresas/rar/">
+      <li><a class="co" href="#">
         <span class="co-media"><img src="assets/co-rar-imob-lg.jpg" alt="" loading="lazy"></span>
         <span class="label">Imobiliário</span>
         <span class="name">RAR Imobiliária</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Desenvolvimento e gestão de património imobiliário.</span></span></span>
       </a></li>
-      <li><a class="co" href="https://www.rar.com/pt/empresas/vitacress/">
+      <li><a class="co" href="#">
         <span class="co-media"><img src="assets/co-vitacress-lg.jpg" alt="" loading="lazy"></span>
         <span class="label">Alimentar · Vegetais frescos</span>
         <span class="name">Vitacress</span>
@@ -404,7 +411,7 @@
         <span class="desc"><span><span>Saladas, agrião e ervas aromáticas, em Portugal e no Reino Unido.</span></span></span>
       </a></li>
         </ul>
-        <a href="https://www.rar.com/pt/empresas/rar-holding/" class="text-link">RAR Holding <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#" class="text-link">RAR Holding <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </section>
@@ -419,42 +426,42 @@
   <div class="overlay-nav">
     <div>
       <h4 class="eyebrow">Grupo RAR</h4>
-      <a href="https://www.rar.com/pt/mensagem-presidente/">Mensagem do Presidente</a>
-      <a href="https://www.rar.com/pt/missao-valores/">Missão e Valores</a>
-      <a href="https://www.rar.com/pt/historia/">História</a>
-      <a href="https://www.rar.com/pt/informacao-institucional/">Informação Institucional</a>
+      <a href="#">Mensagem do Presidente</a>
+      <a href="#">Missão e Valores</a>
+      <a href="#">História</a>
+      <a href="#">Informação Institucional</a>
     </div>
     <div>
       <h4 class="eyebrow">Empresas</h4>
-      <a href="https://www.rar.com/pt/empresas/rar-holding/">RAR Holding</a>
-      <a href="https://www.rar.com/pt/empresas/acembex/">Acembex</a>
-      <a href="https://www.rar.com/pt/empresas/colep-consumer-products/">Colep Consumer Products</a>
-      <a href="https://www.rar.com/pt/empresas/colep-packaging/">Colep Packaging</a>
-      <a href="https://www.rar.com/pt/empresas/rar-acucar/">RAR Açúcar</a>
-      <a href="https://www.rar.com/pt/empresas/rar/">RAR Imobiliária</a>
-      <a href="https://www.rar.com/pt/empresas/vitacress/">Vitacress</a>
+      <a href="#">RAR Holding</a>
+      <a href="#">Acembex</a>
+      <a href="#">Colep Consumer Products</a>
+      <a href="#">Colep Packaging</a>
+      <a href="#">RAR Açúcar</a>
+      <a href="#">RAR Imobiliária</a>
+      <a href="#">Vitacress</a>
     </div>
     <div>
       <h4 class="eyebrow">Informação Financeira</h4>
-      <a href="https://www.rar.com/pt/dados-financeiros/">Dados Financeiros</a>
-      <a href="https://www.rar.com/pt/relatorios-e-contas/">Relatórios e Contas</a>
+      <a href="#">Dados Financeiros</a>
+      <a href="#">Relatórios e Contas</a>
       <h4 class="eyebrow" style="margin-top:32px">Descobrir</h4>
-      <a href="https://www.rar.com/pt/rar-no-mundo/">RAR no Mundo</a>
-      <a href="https://www.rar.com/pt/um-olhar-sobre-a-rar/">Um olhar sobre a RAR</a>
+      <a href="#">RAR no Mundo</a>
+      <a href="#">Um olhar sobre a RAR</a>
     </div>
     <div>
       <h4 class="eyebrow">Media</h4>
-      <a href="https://www.rar.com/pt/comunicados-imprensa/">Comunicados de Imprensa</a>
-      <a href="https://www.rar.com/pt/press-kit/">Press Kit</a>
+      <a href="#">Comunicados de Imprensa</a>
+      <a href="#">Press Kit</a>
       <h4 class="eyebrow" style="margin-top:32px">Contactos</h4>
-      <a href="https://www.rar.com/pt/contactos/">Fale connosco</a>
+      <a href="#">Fale connosco</a>
     </div>
   </div>
   <div class="overlay-foot">
     <span>© 2026 Grupo RAR</span>
     <div>
-      <a href="https://www.rar.com/pt/condicoes-utilizacao-site/">Condições de utilização</a>
-      <a href="https://www.rar.com/pt/politica-privacidade/">Política de privacidade</a>
+      <a href="#">Condições de utilização</a>
+      <a href="#">Política de privacidade</a>
       <button data-lang-toggle>English</button>
     </div>
   </div>
@@ -467,37 +474,37 @@
   </div>
   <div>
     <h4 class="eyebrow">Grupo RAR</h4>
-    <a href="https://www.rar.com/pt/mensagem-presidente/">Mensagem do Presidente</a>
-    <a href="https://www.rar.com/pt/missao-valores/">Missão e Valores</a>
-    <a href="https://www.rar.com/pt/historia/">História</a>
-    <a href="https://www.rar.com/pt/informacao-institucional/">Informação Institucional</a>
+    <a href="#">Mensagem do Presidente</a>
+    <a href="#">Missão e Valores</a>
+    <a href="#">História</a>
+    <a href="#">Informação Institucional</a>
   </div>
   <div>
     <h4 class="eyebrow">Informação Financeira</h4>
-    <a href="https://www.rar.com/pt/dados-financeiros/">Dados Financeiros</a>
-    <a href="https://www.rar.com/pt/relatorios-e-contas/">Relatórios e Contas</a>
-    <a href="https://www.rar.com/pt/rar-no-mundo/">RAR no Mundo</a>
-    <a href="https://www.rar.com/pt/um-olhar-sobre-a-rar/">Um olhar sobre a RAR</a>
+    <a href="#">Dados Financeiros</a>
+    <a href="#">Relatórios e Contas</a>
+    <a href="#">RAR no Mundo</a>
+    <a href="#">Um olhar sobre a RAR</a>
   </div>
   <div>
     <h4 class="eyebrow">Media</h4>
-    <a href="https://www.rar.com/pt/comunicados-imprensa/">Comunicados de Imprensa</a>
-    <a href="https://www.rar.com/pt/press-kit/">Press Kit</a>
-    <a href="https://www.rar.com/pt/contactos/">Contactos</a>
+    <a href="#">Comunicados de Imprensa</a>
+    <a href="#">Press Kit</a>
+    <a href="#">Contactos</a>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Grupo RAR. Todos os direitos reservados.</span>
     <div>
-      <a href="https://www.rar.com/pt/condicoes-utilizacao-site/">Condições de utilização</a>
-      <a href="https://www.rar.com/pt/politica-privacidade/">Política de privacidade</a>
+      <a href="#">Condições de utilização</a>
+      <a href="#">Política de privacidade</a>
       <a href="#top">Topo ↑</a>
     </div>
   </div>
 </footer>
 
 <script>
-  const DURATION = 3000;
-  document.documentElement.style.setProperty("--dur", DURATION + "ms");
+  // The progress line moves at one steady speed: a bit slower than the narrowest field took at 3s
+  const NARROWEST_MS = 3600;
 
   const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -514,19 +521,33 @@
 
   // News panel (same highlights as the current rar.com hero)
   const news = [
-    { pt: "Grupo RAR com EBITDA de 68 milhões de euros", en: "RAR Group posts EBITDA of €68 million", href: "https://www.rar.com/pt/comunicados-imprensa/2025/" },
-    { pt: "Resultado consolidado de 8,2 milhões de euros", en: "Consolidated net income of €8.2 million", href: "https://www.rar.com/pt/comunicados-imprensa/2025/" },
+    { pt: "Grupo RAR com EBITDA de 68 milhões de euros", en: "RAR Group posts EBITDA of €68 million", href: "#" },
+    { pt: "Resultado consolidado de 8,2 milhões de euros", en: "Consolidated net income of €8.2 million", href: "#" },
   ];
   let lang = "pt";
   const caption = document.querySelector("[data-caption]");
   const count = document.querySelector("[data-count]");
-  const progress = document.querySelector("[data-progress]");
+  const progress = document.querySelectorAll("[data-progress]");
   let current = 0, timer;
 
+  // Times each segment by its width; gaps between fields count too when they sit on one row.
+  // Returns how long the whole run takes.
   function restartProgress() {
-    progress.classList.remove("run");
-    void progress.offsetWidth;
-    progress.classList.add("run");
+    const rects = [...progress].map(bar => bar.parentElement.getBoundingClientRect());
+    const oneRow = rects.every(r => Math.abs(r.top - rects[0].top) < 2);
+    const speed = Math.min(...rects.map(r => r.width)) / NARROWEST_MS;
+    let t = 0;
+    progress.forEach((bar, i) => {
+      if (oneRow) t = (rects[i].left - rects[0].left) / speed;
+      const d = rects[i].width / speed;
+      bar.style.animationDuration = d + "ms";
+      bar.style.animationDelay = t + "ms";
+      if (!oneRow) t += d;
+    });
+    progress.forEach(bar => bar.classList.remove("run"));
+    void document.body.offsetWidth;
+    progress.forEach(bar => bar.classList.add("run"));
+    return oneRow ? (rects.at(-1).right - rects[0].left) / speed : t;
   }
   function go(i) {
     current = (i + news.length) % news.length;
@@ -537,14 +558,12 @@
       caption.style.opacity = 1;
       count.textContent = String(current + 1).padStart(2, "0");
     }, 300);
-    restartProgress();
     clearTimeout(timer);
-    timer = setTimeout(() => go(current + 1), DURATION);
+    timer = setTimeout(() => go(current + 1), restartProgress());
   }
   document.querySelector("[data-prev]").addEventListener("click", () => go(current - 1));
   document.querySelector("[data-next]").addEventListener("click", () => go(current + 1));
-  restartProgress();
-  timer = setTimeout(() => go(1), DURATION);
+  timer = setTimeout(() => go(1), restartProgress());
 
   // Language: Portuguese is the markup; English swaps matching text and attributes in place
   const EN = {
@@ -614,7 +633,22 @@
     });
   });
 
-  function setLang(next) {
+  // mark what will change so it can fade during the swap
+  texts.forEach(t => t.node.parentElement.classList.add("i18n"));
+  caption.classList.add("i18n");
+
+  let swap;
+  function setLang(next, animate = true) {
+    if (next === lang) return;
+    clearTimeout(swap);
+    if (!animate || calm) return applyLang(next);
+    document.documentElement.classList.add("is-switching");
+    swap = setTimeout(() => {
+      applyLang(next);
+      requestAnimationFrame(() => document.documentElement.classList.remove("is-switching"));
+    }, 320);
+  }
+  function applyLang(next) {
     lang = next;
     const en = lang === "en";
     document.documentElement.lang = lang;
@@ -629,7 +663,35 @@
   }
   document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
   document.querySelector("[data-lang-toggle]").addEventListener("click", () => setLang(lang === "en" ? "pt" : "en"));
-  if (new URLSearchParams(location.search).get("lang") === "en") setLang("en");
+  if (new URLSearchParams(location.search).get("lang") === "en") setLang("en", false);
+
+  // In-page links glide to their target; a section can name the element that should land near the top
+  let glide;
+  function glideTo(y) {
+    cancelAnimationFrame(glide);
+    if (calm) return scrollTo(0, y);
+    const start = scrollY, dist = y - start, dur = Math.min(1500, 700 + Math.abs(dist) * .3);
+    const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    let t0;
+    const step = now => {
+      t0 ??= now;
+      const k = Math.min(1, (now - t0) / dur);
+      scrollTo(0, start + dist * ease(k));
+      if (k < 1) glide = requestAnimationFrame(step);
+    };
+    glide = requestAnimationFrame(step);
+  }
+  ["wheel", "touchstart", "keydown"].forEach(type => addEventListener(type, () => cancelAnimationFrame(glide), { passive: true }));
+  document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener("click", e => {
+    e.preventDefault();
+    // "#" marks pages that don't exist in this mock-up yet: they stay put
+    if (link.getAttribute("href") === "#") return;
+    const target = document.querySelector(link.getAttribute("href"));
+    if (!target) return;
+    const anchor = target.querySelector("[data-scroll-anchor]") || target;
+    const offset = anchor === target ? 0 : 40;
+    glideTo(target.id === "top" ? 0 : anchor.getBoundingClientRect().top + scrollY - offset);
+  }));
 
   // Menu overlay
   const menu = document.querySelector("[data-menu]");

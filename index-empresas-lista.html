@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grupo RAR</title>
+<title>Grupo RAR — empresas em lista</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,8 +120,8 @@
     position: sticky; bottom: 0; z-index: 1;
     display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
     gap: 0 32px; padding: clamp(80px, 12vh, 140px) clamp(18px, 2.4vw, 36px) clamp(18px, 2.4vw, 36px);
-    background: linear-gradient(0deg, rgba(30,26,20,.5), rgba(30,26,20,.18) 60%, rgba(30,26,20,0));
-    color: #fff; text-shadow: 0 1px 12px rgba(0, 0, 0, .18);
+    background: linear-gradient(0deg, rgba(20,20,18,.62), rgba(20,20,18,.3) 55%, rgba(20,20,18,0));
+    color: #fff;
     --line: rgba(255, 255, 255, .28);
   }
   .meta .label { color: rgba(255, 255, 255, .72); }
@@ -158,84 +158,63 @@
     border-radius: 8px; background: #dcd8d0;
   }
   .reel-media { position: absolute; inset: 0; overflow: hidden; }
-  /* warm, soft light washed over the grey sky so the photo sits in the page's palette */
-  .reel-media::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(180deg, rgba(255, 238, 214, .55), rgba(255, 238, 214, .12) 55%, rgba(255, 238, 214, 0));
-    mix-blend-mode: soft-light;
-  }
-  /* fine film grain, shifting a few times a second, to give the photo an editorial, physical feel */
-  .reel-media::before {
-    content: ""; position: absolute; inset: -50%; z-index: 1; pointer-events: none;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    mix-blend-mode: overlay; opacity: .22;
-    animation: grain .9s steps(3) infinite;
-  }
-  @keyframes grain {
-    0% { transform: translate(0, 0); }
-    33% { transform: translate(-3%, 2%); }
-    66% { transform: translate(2%, -3%); }
-    100% { transform: translate(0, 0); }
-  }
-  /* magazine-style caption */
-  .reel-caption {
-    position: absolute; top: clamp(16px, 2vw, 28px); left: clamp(18px, 2.4vw, 36px); z-index: 1;
-    color: rgba(255, 255, 255, .92); text-shadow: 0 1px 10px rgba(0, 0, 0, .25);
-  }
   /* opens close on the façade, then pulls back to reveal the sky as the page scrolls */
   .reel img {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; object-position: 50% 60%;
     transform: scale(calc(1.42 - var(--p, 0) * .42));
     transform-origin: 50% 74%;
-    filter: brightness(1.14) contrast(.9) saturate(1.06) sepia(.12);
+    filter: saturate(.9) brightness(1.04) contrast(.96);
     animation: pan-wide 50s ease-in-out infinite;
     will-change: transform;
   }
   @keyframes pan-wide { 0%, 100% { object-position: 50% 60%; } 50% { object-position: 30% 60%; } }
 
   /* ---------- COMPANIES ---------- */
-  /* 2×3 directory: a small photo as an accent, the text leads */
+  /* list on the left, one large photo on the right that follows the company in focus */
   .companies { padding: clamp(112px, 18vh, 220px) var(--pad) clamp(48px, 8vh, 96px); }
   .companies-head { margin-bottom: clamp(28px, 4vh, 48px); }
   .companies-head h2 {
     font-weight: 200; font-size: clamp(34px, 4vw, 60px); letter-spacing: -.04em; line-height: 1;
     margin-top: 14px;
   }
-  .company-list {
-    list-style: none;
-    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 72px);
+  .companies-body {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(32px, 5vw, 96px); align-items: start;
   }
-  .company-list li { border-top: 1px solid var(--line); }
+  .company-list { list-style: none; border-top: 1px solid var(--line); }
   .co {
-    display: grid; grid-template-columns: clamp(112px, 11vw, 168px) minmax(0, 1fr) 24px; column-gap: clamp(16px, 1.8vw, 28px);
-    grid-template-areas: "media label arrow" "media name arrow" "media desc desc";
-    grid-template-rows: auto auto 1fr;
-    padding: 24px 0 28px;
+    display: grid; grid-template-columns: minmax(0, 1fr) 24px; column-gap: 16px;
+    grid-template-areas: "label arrow" "name arrow" "desc desc";
+    padding: 24px 0; border-bottom: 1px solid var(--line);
   }
-  .co-media {
-    grid-area: media; display: block; position: relative; overflow: hidden;
-    aspect-ratio: 1; border-radius: 6px; background: #dcd8d0; align-self: start;
-  }
-  /* one shared treatment so six very different photos read as a set: softer colour, a warm veil that lifts on hover */
-  .co-media img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-    filter: saturate(.62) contrast(.94) brightness(1.03);
-    transition: transform 1.4s cubic-bezier(.2, .7, .2, 1), filter .8s ease;
-  }
-  .co-media::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: #e9dcc4; mix-blend-mode: multiply; opacity: .32;
-    transition: opacity .8s ease;
-  }
+  .co-media { display: none; }
   .co .label { grid-area: label; }
-  .co .name { grid-area: name; margin-top: 6px; font-size: clamp(22px, 1.9vw, 30px); font-weight: 300; letter-spacing: -.025em; line-height: 1.15; }
-  .co .arrow { grid-area: arrow; align-self: end; margin-bottom: 4px; opacity: 0; transform: translateX(-8px); transition: opacity .4s, transform .4s; }
-  .co .desc { grid-area: desc; padding-top: 8px; max-width: 38ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-  .co:hover .co-media img, .co:focus-visible .co-media img { transform: scale(1.06); filter: none; }
-  .co:hover .co-media::after, .co:focus-visible .co-media::after { opacity: 0; }
-  .co:hover .arrow, .co:focus-visible .arrow { opacity: 1; transform: none; }
-  .companies .text-link { margin-top: clamp(36px, 5vh, 56px); }
+  .co .name {
+    grid-area: name; margin-top: 8px;
+    font-size: clamp(26px, 2.6vw, 40px); font-weight: 300; letter-spacing: -.03em; line-height: 1.1;
+    color: #8a867e; transition: color .5s;
+  }
+  .co .arrow { grid-area: arrow; align-self: end; margin-bottom: 6px; opacity: 0; transform: translateX(-8px); transition: opacity .5s, transform .5s; }
+  .co .desc { grid-area: desc; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s cubic-bezier(.2, .7, .2, 1); }
+  .co .desc > span { overflow: hidden; }
+  .co .desc > span > span { display: block; padding-top: 12px; max-width: 40ch; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+  .co.is-active .name { color: var(--ink); }
+  .co.is-active .arrow { opacity: 1; transform: none; }
+  .co.is-active .desc { grid-template-rows: 1fr; }
+  .companies .text-link { margin-top: 32px; }
+
+  .co-stage {
+    position: sticky; top: var(--pad);
+    height: min(78vh, 720px); height: min(78svh, 720px);
+    border-radius: 8px; overflow: hidden; background: #dcd8d0;
+  }
+  .co-stage img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transform: scale(1.06);
+    transition: opacity .9s ease, transform 1.8s cubic-bezier(.2, .7, .2, 1);
+  }
+  .co-stage img.is-active { opacity: 1; transform: none; }
 
   /* ---------- MENU OVERLAY ---------- */
   .overlay {
@@ -290,8 +269,19 @@
     .meta { grid-template-columns: 1fr 1fr; gap: 24px 20px; }
     .news { grid-column: 1 / -1; }
     .reel { height: 78svh; }
-    .company-list { grid-template-columns: minmax(0, 1fr); }
+    .companies-body { display: block; }
+    .co-stage { display: none; }
+    .company-list {
+      display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      border-top: 0; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); scroll-padding-inline: var(--pad);
+    }
+    .company-list::-webkit-scrollbar { display: none; }
+    .company-list li { flex: 0 0 min(78%, 360px); scroll-snap-align: start; }
+    .co { grid-template-areas: "media media" "label arrow" "name arrow" "desc desc"; padding: 0; border-bottom: 0; }
+    .co-media { display: block; grid-area: media; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 8px; margin-bottom: 16px; }
+    .co .name { color: var(--ink); }
     .co .arrow { opacity: 1; transform: none; }
+    .co .desc { grid-template-rows: 1fr; }
     .footer { grid-template-columns: 1fr 1fr; }
     .footer-brand { grid-column: 1 / -1; }
   }
@@ -299,7 +289,6 @@
     .lang { display: none; }
     .lede p { font-size: 17px; }
     .headline { font-size: 12.2vw; }
-    .co { grid-template-columns: 96px minmax(0, 1fr) 24px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
@@ -334,7 +323,6 @@
   <div class="showcase fade d2" aria-label="Sede do Grupo RAR">
     <div class="reel" data-reel>
       <div class="reel-media"><img src="assets/hero-2.jpg" alt="Sede do Grupo RAR no Porto"></div>
-      <span class="reel-caption label">Sede · Porto</span>
       <div class="meta">
         <div class="news">
           <div class="progress"><span data-progress></span></div>
@@ -368,42 +356,42 @@
       <div>
         <ul class="company-list">
       <li><a class="co" href="https://www.rar.com/pt/empresas/acembex/">
-        <span class="co-media"><img src="assets/co-acembex-lg.jpg" style="object-position: 12% 40%" alt="" loading="lazy"></span>
+        <img class="co-media" src="assets/co-acembex-lg.jpg" style="object-position: 12% 40%" alt="" loading="lazy">
         <span class="label">Alimentar</span>
         <span class="name">Acembex</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Importação e distribuição de matérias-primas alimentares.</span></span></span>
       </a></li>
       <li><a class="co" href="https://www.rar.com/pt/empresas/colep-consumer-products/">
-        <span class="co-media"><img src="assets/co-colep-cp-lg.jpg" alt="" loading="lazy"></span>
+        <img class="co-media" src="assets/co-colep-cp-lg.jpg" alt="" loading="lazy">
         <span class="label">Produtos de consumo</span>
         <span class="name">Colep Consumer Products</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Produção, por contrato, de produtos de cuidado pessoal e para a casa.</span></span></span>
       </a></li>
       <li><a class="co" href="https://www.rar.com/pt/empresas/colep-packaging/">
-        <span class="co-media"><img src="assets/co-colep-pk-lg.jpg" alt="" loading="lazy"></span>
+        <img class="co-media" src="assets/co-colep-pk-lg.jpg" alt="" loading="lazy">
         <span class="label">Embalagem</span>
         <span class="name">Colep Packaging</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Embalagens metálicas e aerossóis para marcas de consumo.</span></span></span>
       </a></li>
       <li><a class="co" href="https://www.rar.com/pt/empresas/rar-acucar/">
-        <span class="co-media"><img src="assets/co-rar-acucar-lg.jpg" alt="" loading="lazy"></span>
+        <img class="co-media" src="assets/co-rar-acucar-lg.jpg" alt="" loading="lazy">
         <span class="label">Açúcar</span>
         <span class="name">RAR Açúcar</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Refinação e comercialização de açúcar em Portugal.</span></span></span>
       </a></li>
       <li><a class="co" href="https://www.rar.com/pt/empresas/rar/">
-        <span class="co-media"><img src="assets/co-rar-imob-lg.jpg" alt="" loading="lazy"></span>
+        <img class="co-media" src="assets/co-rar-imob-lg.jpg" alt="" loading="lazy">
         <span class="label">Imobiliário</span>
         <span class="name">RAR Imobiliária</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Desenvolvimento e gestão de património imobiliário.</span></span></span>
       </a></li>
       <li><a class="co" href="https://www.rar.com/pt/empresas/vitacress/">
-        <span class="co-media"><img src="assets/co-vitacress-lg.jpg" alt="" loading="lazy"></span>
+        <img class="co-media" src="assets/co-vitacress-lg.jpg" alt="" loading="lazy">
         <span class="label">Alimentar · Vegetais frescos</span>
         <span class="name">Vitacress</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -412,6 +400,7 @@
         </ul>
         <a href="https://www.rar.com/pt/empresas/rar-holding/" class="text-link">RAR Holding <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
+      <div class="co-stage" data-co-stage aria-hidden="true"></div>
     </div>
   </section>
 </main>
@@ -552,6 +541,24 @@
   restartProgress();
   timer = setTimeout(() => go(1), DURATION);
 
+  // Companies: the photo on the right follows the company being pointed at or focused
+  const cos = [...document.querySelectorAll(".co")];
+  const stage = document.querySelector("[data-co-stage]");
+  cos.forEach(co => {
+    const img = co.querySelector(".co-media").cloneNode();
+    img.removeAttribute("class");
+    stage.append(img);
+  });
+  function showCompany(i) {
+    cos.forEach((co, j) => co.classList.toggle("is-active", i === j));
+    [...stage.children].forEach((img, j) => img.classList.toggle("is-active", i === j));
+  }
+  cos.forEach((co, i) => {
+    co.addEventListener("mouseenter", () => showCompany(i));
+    co.addEventListener("focus", () => showCompany(i));
+  });
+  showCompany(0);
+
   // Language: Portuguese is the markup; English swaps matching text and attributes in place
   const EN = {
     "Seis empresas,": "Six companies,",
@@ -559,7 +566,6 @@
     "Diversos setores, do Porto para o mundo. Mais de mil milhões de euros de volume de negócios.": "Diverse sectors, from Porto to the world. Over one billion euros in turnover.",
     "Conhecer o grupo": "Discover the group",
     "Destaques": "Highlights",
-    "Sede · Porto": "Headquarters · Porto",
     "Presença internacional": "Global presence",
     "7 centros de operação": "7 core hubs",
     "6 empresas": "6 companies",

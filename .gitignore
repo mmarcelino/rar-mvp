@@ -3,8 +3,31 @@
 # earlier design iterations, kept locally only
 index-v*.html
 
-# images not used by the current page
+# images: only the ones the published pages use are versioned
 assets/*
-!assets/logo.svg
+!assets/apple-touch-icon.png
+!assets/board-gs.jpg
+!assets/board-jhs.jpg
+!assets/board-nms-color.jpg
+!assets/board-nms.jpg
+!assets/board-rms.jpg
+!assets/board-vn.jpg
+!assets/co-acembex-barley.jpg
+!assets/co-acembex-lg.jpg
+!assets/co-colep-cp-cream.jpg
+!assets/co-colep-cp-lg.jpg
+!assets/co-colep-cp-line.jpg
+!assets/co-colep-pk-lg.jpg
+!assets/co-rar-acucar-layers.jpg
+!assets/co-rar-acucar-lg.jpg
+!assets/co-rar-imob-lg.jpg
+!assets/co-rar-imob-patio.jpg
+!assets/co-vitacress-basil.jpg
+!assets/co-vitacress-lg.jpg
+!assets/favicon.svg
 !assets/hero-2.jpg
-!assets/co-*.jpg
+!assets/history-1967.jpg
+!assets/logo.svg
+!assets/people-factory.jpg
+!assets/people-field-pt.jpg
+!assets/people-greenhouse.jpg

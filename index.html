@@ -125,7 +125,15 @@
     --line: rgba(255, 255, 255, .28);
   }
   .meta .label { color: rgba(255, 255, 255, .72); }
-  .meta > div { position: relative; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 10px; align-content: start; }
+  .meta > div { position: relative; padding-top: 16px; display: grid; gap: 10px; align-content: start; }
+  /* entrance: each field's hairline draws left to right, then its content rises, field after field */
+  .meta > div:nth-child(1) { --m: 0; } .meta > div:nth-child(2) { --m: 1; } .meta > div:nth-child(3) { --m: 2; }
+  .meta > div::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line);
+    transform: scaleX(0); transform-origin: left; animation: draw .7s cubic-bezier(.2, .7, .2, 1) calc(1.2s + var(--m) * .14s) forwards;
+  }
+  .meta > div > :not(.progress) { opacity: 0; transform: translateY(10px); animation: fade-up .7s cubic-bezier(.2, .7, .2, 1) calc(1.4s + var(--m) * .14s) forwards; }
+  @keyframes draw { to { transform: none; } }
   .meta .value { font-size: 18px; font-weight: 300; letter-spacing: -.01em; }
   .meta a.value { display: inline-flex; align-items: center; gap: 10px; }
   .meta a.value:hover .arrow { transform: translateX(4px); }
@@ -159,6 +167,11 @@
     border-radius: 8px; background: #dcd8d0;
   }
   .reel-media { position: absolute; inset: 0; overflow: hidden; }
+  /* magazine-style caption */
+  .reel-caption {
+    position: absolute; top: clamp(16px, 2vw, 28px); left: clamp(18px, 2.4vw, 36px); z-index: 1;
+    color: rgba(255, 255, 255, .92); text-shadow: 0 1px 10px rgba(0, 0, 0, .25);
+  }
   /* warmth comes from a multiplied amber tint (it can only darken), so the blacks stay deep and nothing goes hazy */
   .reel-media::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -276,6 +289,8 @@
     margin: var(--section-gap) var(--pad) 0; padding: clamp(28px, 4vw, 64px);
     border-radius: var(--radius); background: #1f1e1b; color: var(--ink);
   }
+  /* the dark panel already separates the section: its marker drops the hairline */
+  #investidores .section-mark { border-top: 0; padding-top: 0; }
   #investidores .pill-btn:hover { background: var(--ink); color: #1f1e1b; border-color: var(--ink); }
 
   /* ---------- PRESENCE ---------- */
@@ -402,6 +417,7 @@
   .footer a { display: block; font-size: 15px; padding: 4px 0; color: var(--ink-2); transition: color .2s; }
   .footer a:hover { color: var(--ink); }
   .footer-brand img { width: 44px; filter: brightness(.3); margin-bottom: 18px; }
+  .footer-logo { display: inline-block; padding: 0; }
   .footer-brand p { color: var(--ink-2); font-size: 15px; max-width: 28ch; line-height: 1.5; }
   .footer-bottom {
     grid-column: 1 / -1; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
@@ -439,6 +455,7 @@
   }
   @media (max-width: 560px) {
     .lang { display: none; }
+    .overlay-foot { display: none; }
     .lede p { font-size: 17px; }
     .headline { font-size: 12.2vw; }
     .co { grid-template-columns: 96px minmax(0, 1fr) 24px; }
@@ -447,7 +464,12 @@
   .i18n { transition: opacity .32s ease, filter .32s ease; }
   html.is-switching .i18n { opacity: 0; filter: blur(3px); }
 
+  /* sections: heading and content rise in, one after another, the first time they're seen */
+  html .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform 1.1s cubic-bezier(.2, .7, .2, 1); transition-delay: calc(var(--r, 0) * 110ms); }
+  html .reveal.is-in { opacity: 1; transform: none; }
+
   @media (prefers-reduced-motion: reduce) {
+    .meta > div::before, .meta > div > * { animation-delay: 0s !important; }
     *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
   }
 </style>
@@ -472,7 +494,7 @@
       <span class="line"><span><span class="muted">uma visão.</span></span></span>
     </h1>
     <div class="lede fade d1">
-      <p>Diversos setores, do Porto para o mundo. Mais de mil milhões de euros de volume de negócios.</p>
+      <p>Mais de seis décadas de experiência a desenvolver negócios em diferentes setores e geografias.</p>
       <a href="#" class="text-link">Conhecer o grupo <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
@@ -480,6 +502,7 @@
   <div class="showcase fade d2" aria-label="Sede do Grupo RAR">
     <div class="reel" data-reel>
       <div class="reel-media"><img src="assets/hero-2.jpg" alt="Sede do Grupo RAR no Porto"></div>
+      <span class="reel-caption label">Sede · Porto</span>
       <div class="meta">
         <div class="news">
           <div class="progress"><span data-progress></span></div>
@@ -509,7 +532,7 @@
   <section class="companies" id="empresas">
     <div class="section-mark" data-scroll-anchor><span>01</span><span>Portfólio</span></div>
     <div class="companies-head">
-      <h2>Empresas do Grupo RAR</h2>
+      <h2>Empresas e áreas de negócio</h2>
     </div>
     <div class="companies-body">
       <div>
@@ -522,7 +545,7 @@
         <span class="desc"><span><span>Importação e distribuição de matérias-primas alimentares.</span></span></span>
       </a></li>
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-colep-cp-jar.jpg" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-colep-cp-cream.jpg" alt="" loading="lazy"></span>
         <span class="label">Produtos de consumo</span>
         <span class="name">Colep Consumer Products</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -595,13 +618,13 @@
       <g class="cities"><g class="city hub" data-country="PT" style="--i:0"><circle class="pulse" cx="728.1" cy="182.5" r="7"/><circle class="pin" cx="728.1" cy="182.5" r="3.4"/><text class="map-label" x="718.1" y="186.5" text-anchor="end">Portugal</text></g><g class="city" data-country="ES" style="--i:1"><circle class="pulse" cx="762.7" cy="191.2" r="7"/><circle class="pin" cx="762.7" cy="191.2" r="2.8"/><text class="map-label" x="770.7" y="205.2" text-anchor="start">Espanha</text></g><g class="city" data-country="UK" style="--i:2"><circle class="pulse" cx="777.5" cy="77.2" r="7"/><circle class="pin" cx="777.5" cy="77.2" r="2.8"/><text class="map-label" x="767.5" y="81.2" text-anchor="end">Reino Unido</text></g><g class="city" data-country="NL" style="--i:3"><circle class="pulse" cx="828.2" cy="80.0" r="7"/><circle class="pin" cx="828.2" cy="80.0" r="2.8"/><text class="map-label" x="828.2" y="69.0" text-anchor="middle">Países Baixos</text></g><g class="city" data-country="DE" style="--i:4"><circle class="pulse" cx="863.4" cy="106.6" r="7"/><circle class="pin" cx="863.4" cy="106.6" r="2.8"/><text class="map-label" x="863.4" y="123.6" text-anchor="middle">Alemanha</text></g><g class="city" data-country="PL" style="--i:5"><circle class="pulse" cx="924.6" cy="81.8" r="7"/><circle class="pin" cx="924.6" cy="81.8" r="2.8"/><text class="map-label" x="934.6" y="85.8" text-anchor="start">Polónia</text></g><g class="city" data-country="MX" style="--i:6"><circle class="pulse" cx="66.9" cy="342.0" r="7"/><circle class="pin" cx="66.9" cy="342.0" r="2.8"/><text class="map-label" x="76.9" y="346.0" text-anchor="start">México</text></g></g>
     </svg>
     <ul class="countries" data-countries>
-      <li data-country="PT" tabindex="0"><span class="label code">PT</span><strong>Portugal</strong><span class="cities">Porto, Vale de Cambra, Almancil, Odemira</span></li>
-      <li data-country="ES" tabindex="0"><span class="label code">ES</span><strong>Espanha</strong><span class="cities">Vigo, Barcelona, San Adrián, Águilas</span></li>
-      <li data-country="UK" tabindex="0"><span class="label code">UK</span><strong>Reino Unido</strong><span class="cities">Andover, Bere Regis, Chichester, Pewsey, Ramsgate</span></li>
-      <li data-country="PL" tabindex="0"><span class="label code">PL</span><strong>Polónia</strong><span class="cities">Kleszczów</span></li>
-      <li data-country="MX" tabindex="0"><span class="label code">MX</span><strong>México</strong><span class="cities">Santiago de Querétaro</span></li>
-      <li data-country="NL" tabindex="0"><span class="label code">NL</span><strong>Países Baixos</strong><span class="cities">Venlo</span></li>
-      <li data-country="DE" tabindex="0"><span class="label code">DE</span><strong>Alemanha</strong><span class="cities">Schleiden</span></li>
+      <li data-country="PT" tabindex="0" style="--i:0"><span class="label code">PT</span><strong>Portugal</strong><span class="cities">Porto, Vale de Cambra, Almancil, Odemira</span></li>
+      <li data-country="ES" tabindex="0" style="--i:1"><span class="label code">ES</span><strong>Espanha</strong><span class="cities">Vigo, Barcelona, San Adrián, Águilas</span></li>
+      <li data-country="UK" tabindex="0" style="--i:2"><span class="label code">UK</span><strong>Reino Unido</strong><span class="cities">Andover, Bere Regis, Chichester, Pewsey, Ramsgate</span></li>
+      <li data-country="PL" tabindex="0" style="--i:5"><span class="label code">PL</span><strong>Polónia</strong><span class="cities">Kleszczów</span></li>
+      <li data-country="MX" tabindex="0" style="--i:6"><span class="label code">MX</span><strong>México</strong><span class="cities">Santiago de Querétaro</span></li>
+      <li data-country="NL" tabindex="0" style="--i:3"><span class="label code">NL</span><strong>Países Baixos</strong><span class="cities">Venlo</span></li>
+      <li data-country="DE" tabindex="0" style="--i:4"><span class="label code">DE</span><strong>Alemanha</strong><span class="cities">Schleiden</span></li>
     </ul>
     <a href="#" class="text-link presence-link">Ver o Grupo RAR no mundo <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </section>
@@ -610,9 +633,9 @@
     <div class="section-mark"><span>04</span><span>História</span></div>
     <div class="history-media">
       <div class="history-copy">
-        <h2 class="history-title" id="historia-title">De uma refinaria a seis empresas</h2>
+        <h2 class="history-title" id="historia-title">Uma história feita de muitas histórias</h2>
         <div class="section-intro">
-        <p>Tudo começou com o açúcar, no Porto, em 1962. Seis décadas depois, a mesma origem deu lugar a um grupo presente em sete países.</p>
+        <p>Tudo começou com o açúcar, em 1962. Desde então, o Grupo RAR foi crescendo, diversificando os seus negócios e construindo um grupo com presença em diferentes setores e geografias.</p>
         <a href="#" class="text-link">Conhecer a história <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
@@ -628,7 +651,7 @@
     <div class="section-head">
       <h2 id="pessoas-title" class="people-title">3&nbsp;490 pessoas, em sete países.</h2>
       <div class="section-intro">
-        <p>Da refinação de açúcar no Porto aos campos de agrião no Reino Unido, é o trabalho das nossas equipas que faz o grupo crescer.</p>
+        <p>Diferentes percursos. Diferentes perspetivas. É graças a todos os que fazem parte da RAR que o Grupo evolui — e é nesta evolução constante que cada pessoa encontra espaço para ir mais longe.</p>
         <a href="#" class="text-link">Trabalhar no Grupo RAR <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
@@ -645,8 +668,8 @@
       <span class="portrait"><img src="assets/board-nms-color.jpg" alt="Nuno Macedo Silva" loading="lazy"></span>
       <figure>
         <blockquote>
-          <p>“O Grupo RAR prossegue — de forma prudente — o seu processo de desenvolvimento e consolidação.”</p>
-          <p>O Grupo RAR integra um conjunto diversificado de negócios cuja gestão é coordenada pela RAR – Sociedade de Controle (Holding), S.A. Apesar do aumento da volatilidade nos mercados, tem sido possível adequar a performance das empresas do Grupo RAR à otimização das condições de exploração.</p>
+          <p>“O Grupo RAR prossegue, de forma prudente, o seu processo de desenvolvimento e consolidação.”</p>
+          <p>Apesar do aumento da volatilidade nos mercados, tem sido possível adequar a performance das empresas do Grupo RAR à otimização das condições de exploração.</p>
         </blockquote>
         <footer>
           <div>
@@ -713,7 +736,7 @@
 
 <footer class="footer">
   <div class="footer-brand">
-    <img src="assets/logo.svg" alt="Grupo RAR">
+    <a href="#top" class="footer-logo" aria-label="Voltar ao topo"><img src="assets/logo.svg" alt="Grupo RAR"></a>
     <p>Seis empresas,<br>uma visão.</p>
   </div>
   <div>
@@ -741,7 +764,6 @@
     <div>
       <a href="#">Condições de utilização</a>
       <a href="#">Política de privacidade</a>
-      <a href="#top">Topo ↑</a>
     </div>
   </div>
 </footer>
@@ -811,6 +833,36 @@
   document.querySelector("[data-next]").addEventListener("click", () => go(current + 1));
   timer = setTimeout(() => go(1), restartProgress());
 
+  // Sections: mark the heading block and each piece of content, then reveal them in order on first sight
+  const revealGroups = [
+    ["#empresas", ".companies-head, .company-list > li, .companies > .text-link"],
+    ["#investidores", ".section-head, .figures > li, .report-btn"],
+    ["#presenca", ".section-head, .presence-link"],
+    ["#presenca", ".countries > li"],
+    ["#historia", ".history-copy > *, .archive"],
+    ["#pessoas", ".section-head > *, .people-strip > figure"],
+    ["#presidente", ".portrait, .president blockquote > p, .president footer"],
+  ];
+  if (!calm && "IntersectionObserver" in window) {
+    const show = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      el.classList.add("is-in");
+      show.unobserve(el);
+      // once in place, hand the element back its own transitions (hover states etc.)
+      setTimeout(() => el.classList.remove("reveal", "is-in"), 1200 + (+el.style.getPropertyValue("--r") || 0) * 110);
+    }), { rootMargin: "0px 0px -15% 0px" });
+    revealGroups.forEach(([section, parts]) => {
+      const root = document.querySelector(section);
+      if (!root) return;
+      root.querySelectorAll(parts).forEach((el, i) => {
+        el.classList.add("reveal");
+        el.style.setProperty("--r", Math.min(i, 8));
+        show.observe(el);
+      });
+    });
+  }
+
   // Map: reveal once, and highlight a country's cities while its row is pointed at or focused
   const world = document.querySelector("[data-world]");
   if (!calm && "IntersectionObserver" in window) {
@@ -819,7 +871,7 @@
       if (!entries.some(e => e.isIntersecting)) return;
       seenWorld.disconnect();
       world.classList.add("is-visible");
-    }, { threshold: 0, rootMargin: "0px 0px 10% 0px" });
+    }, { threshold: .3 });
     seenWorld.observe(world);
   }
   function highlight(code) {
@@ -864,13 +916,19 @@
   const EN = {
     "Seis empresas,": "Six companies,",
     "uma visão.": "one vision.",
-    "Diversos setores, do Porto para o mundo. Mais de mil milhões de euros de volume de negócios.": "Diverse sectors, from Porto to the world. Over one billion euros in turnover.",
     "Conhecer o grupo": "Discover the group",
     "Destaques de imprensa": "Press highlights",
+    "Mais de seis décadas de experiência a desenvolver negócios em diferentes setores e geografias.": "More than six decades of experience building businesses across different sectors and geographies.",
+    "Empresas e áreas de negócio": "Companies and business areas",
+    "Uma história feita de muitas histórias": "A story made of many stories",
+    "Tudo começou com o açúcar, em 1962. Desde então, o Grupo RAR foi crescendo, diversificando os seus negócios e construindo um grupo com presença em diferentes setores e geografias.": "It all began with sugar, in 1962. Since then, the RAR Group has kept growing, diversifying its businesses and building a group present across different sectors and geographies.",
+    "Diferentes percursos. Diferentes perspetivas. É graças a todos os que fazem parte da RAR que o Grupo evolui — e é nesta evolução constante que cada pessoa encontra espaço para ir mais longe.": "Different paths. Different perspectives. The Group evolves thanks to everyone who is part of RAR — and in that constant evolution, each person finds room to go further.",
+    "“O Grupo RAR prossegue, de forma prudente, o seu processo de desenvolvimento e consolidação.”": "“The RAR Group continues, prudently, its process of development and consolidation.”",
+    "Apesar do aumento da volatilidade nos mercados, tem sido possível adequar a performance das empresas do Grupo RAR à otimização das condições de exploração.": "Despite increasing market volatility, the RAR Group companies have been able to align their performance with optimised operating conditions.",
+    "Sede · Porto": "Headquarters · Porto",
+    "Voltar ao topo": "Back to top",
     "Valores consolidados de 2025": "Consolidated figures, 2025",
     "Relatório e Contas 2025 · PDF": "Annual Report 2025 · PDF",
-    "De uma refinaria a seis empresas": "From one refinery to six companies",
-    "Tudo começou com o açúcar, no Porto, em 1962. Seis décadas depois, a mesma origem deu lugar a um grupo presente em sete países.": "It all began with sugar, in Porto, in 1962. Six decades on, the same roots have grown into a group present in seven countries.",
     "Conhecer a história": "Explore our history",
     "Arquivo RAR · 1967": "RAR archive · 1967",
     "Refinaria da RAR no Porto, em 1967": "The RAR refinery in Porto, 1967",
@@ -888,14 +946,11 @@
     "Ver o Grupo RAR no mundo": "See the RAR Group worldwide",
     "Pessoas": "People",
     "3\u00a0490 pessoas, em sete países.": "3,490 people, in seven countries.",
-    "Da refinação de açúcar no Porto aos campos de agrião no Reino Unido, é o trabalho das nossas equipas que faz o grupo crescer.": "From sugar refining in Porto to watercress fields in the UK, it is our teams’ work that makes the group grow.",
     "Trabalhar no Grupo RAR": "Work at the RAR Group",
     "Colaboradora da Vitacress a observar uma planta numa estufa": "A Vitacress team member examining a plant in a greenhouse",
     "Colaborador da Colep Packaging na fábrica": "A Colep Packaging team member at the plant",
     "Equipa da Vitacress na colheita, no campo": "A Vitacress team harvesting in the field",
     "Presidente do Grupo RAR": "Chairman of the RAR Group",
-    "“O Grupo RAR prossegue — de forma prudente — o seu processo de desenvolvimento e consolidação.”": "“The RAR Group continues — prudently — its process of development and consolidation.”",
-    "O Grupo RAR integra um conjunto diversificado de negócios cuja gestão é coordenada pela RAR – Sociedade de Controle (Holding), S.A. Apesar do aumento da volatilidade nos mercados, tem sido possível adequar a performance das empresas do Grupo RAR à otimização das condições de exploração.": "The RAR Group brings together a diversified set of businesses, managed under the coordination of RAR – Sociedade de Controle (Holding), S.A. Despite increasing market volatility, the RAR Group companies have been able to align their performance with optimised operating conditions.",
     "Ler a mensagem completa": "Read the full message",
     "O grupo em números": "The group in numbers",
     "Informação financeira": "Financial information",
@@ -906,7 +961,6 @@
     "Descarregar PDF": "Download PDF",
     "Conhecer as empresas": "Explore the companies",
     "Portfólio": "Portfolio",
-    "Empresas do Grupo RAR": "RAR Group companies",
     "Alimentar": "Food",
     "Produtos de consumo": "Consumer products",
     "Embalagem": "Packaging",
@@ -940,7 +994,6 @@
     "Política de privacidade": "Privacy policy",
     "English": "Português",
     "© 2026 Grupo RAR. Todos os direitos reservados.": "© 2026 RAR Group. All rights reserved.",
-    "Topo ↑": "Top ↑",
     "Grupo RAR — início": "RAR Group — home",
     "Abrir menu": "Open menu",
     "Fechar menu": "Close menu",

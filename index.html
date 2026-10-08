@@ -159,11 +159,11 @@
     border-radius: 8px; background: #dcd8d0;
   }
   .reel-media { position: absolute; inset: 0; overflow: hidden; }
-  /* warm, soft light washed over the grey sky so the photo sits in the page's palette */
+  /* warmth comes from a multiplied amber tint (it can only darken), so the blacks stay deep and nothing goes hazy */
   .reel-media::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(180deg, rgba(255, 238, 214, .55), rgba(255, 238, 214, .12) 55%, rgba(255, 238, 214, 0));
-    mix-blend-mode: soft-light;
+    background: linear-gradient(180deg, rgba(255, 196, 140, .32), rgba(255, 206, 160, .2));
+    mix-blend-mode: multiply;
   }
   /* fine film grain, shifting a few times a second, to give the photo an editorial, physical feel */
   .reel-media::before {
@@ -184,7 +184,7 @@
     object-fit: cover; object-position: 50% 60%;
     transform: scale(calc(1.42 - var(--p, 0) * .42));
     transform-origin: 50% 74%;
-    filter: brightness(1.14) contrast(.9) saturate(1.06) sepia(.12);
+    filter: brightness(1.18) contrast(1.04) saturate(1.08) sepia(.14);
     animation: pan-wide 50s ease-in-out infinite;
     will-change: transform;
   }
@@ -213,15 +213,15 @@
     grid-area: media; display: block; position: relative; overflow: hidden;
     aspect-ratio: 1; border-radius: 6px; background: #dcd8d0; align-self: start;
   }
-  /* one shared treatment so six very different photos read as a set: softer colour, a warm veil that lifts on hover */
+  /* one shared grade for all six: a touch warm, a touch muted, soft contrast; the true colour returns on hover */
   .co-media img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-    filter: saturate(.62) contrast(.94) brightness(1.03);
+    filter: sepia(.12) saturate(.78) contrast(.95) brightness(1.02);
     transition: transform 1.4s cubic-bezier(.2, .7, .2, 1), filter .8s ease;
   }
   .co-media::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: #e9dcc4; mix-blend-mode: multiply; opacity: .32;
+    background: #e9dcc4; mix-blend-mode: multiply; opacity: .22;
     transition: opacity .8s ease;
   }
   .co .label { grid-area: label; }
@@ -284,15 +284,15 @@
   .presence-figures strong { font-weight: 200; font-size: clamp(44px, 5vw, 80px); letter-spacing: -.05em; line-height: .95; }
   /* dot-matrix map: land fades in, arcs draw out from Porto, cities light up one by one */
   .world { display: block; width: 100%; height: auto; margin: clamp(8px, 2vh, 24px) 0 clamp(32px, 5vh, 56px); overflow: visible; }
-  .world .land { fill: none; stroke: #cdc7bb; stroke-width: 2.50; stroke-linecap: round; transition: opacity 1.2s ease; }
-  .world .arc { fill: none; stroke: var(--ink); stroke-width: .8; opacity: .55; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s cubic-bezier(.6, 0, .2, 1) calc(.6s + var(--i) * .14s), opacity .4s; }
+  .world .land { fill: none; stroke: #cdc7bb; stroke-width: 2.50; stroke-linecap: round; transition: opacity .6s ease; }
+  .world .arc { fill: none; stroke: var(--ink); stroke-width: .8; opacity: .55; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(.2, .7, .2, 1) calc(var(--i) * .08s), opacity .4s; }
   .world .city { transition: opacity .4s; }
-  .world .map-label { opacity: 1; transition: opacity .6s ease calc(1.6s + var(--i) * .08s); }
+  .world .map-label { opacity: 1; transition: opacity .6s ease calc(.7s + var(--i) * .06s); }
   .world.will-reveal .map-label { opacity: 0; }
   .world.will-reveal.is-visible .map-label { opacity: 1; }
-  .world .pin { fill: var(--ink); transform-box: fill-box; transform-origin: center; transition: transform .6s cubic-bezier(.2, .7, .2, 1.4) calc(1.4s + var(--i) * .06s); }
+  .world .pin { fill: var(--ink); transform-box: fill-box; transform-origin: center; transition: transform .6s cubic-bezier(.2, .7, .2, 1.4) calc(.5s + var(--i) * .05s); }
   .world .pulse { fill: none; stroke: var(--ink); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: 0; transform-box: fill-box; transform-origin: center; }
-  .world .hub .pulse { animation: map-pulse 2.8s ease-out 2.6s infinite; }
+  .world .hub .pulse { animation: map-pulse 2.8s ease-out 1.4s infinite; }
   /* a halo in the page colour clears the dots behind each name */
   .map-label {
     font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase;
@@ -515,46 +515,46 @@
       <div>
         <ul class="company-list">
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-acembex-lg.jpg" style="object-position: 12% 40%" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-acembex-barley.jpg" alt="" loading="lazy"></span>
         <span class="label">Alimentar</span>
         <span class="name">Acembex</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Importação e distribuição de matérias-primas alimentares.</span></span></span>
       </a></li>
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-colep-cp-lg.jpg" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-colep-cp-jar.jpg" alt="" loading="lazy"></span>
         <span class="label">Produtos de consumo</span>
         <span class="name">Colep Consumer Products</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <span class="desc"><span><span>Produção, por contrato, de produtos de cuidado pessoal e para a casa.</span></span></span>
+        <span class="desc"><span><span>Desenvolvimento de produtos de cuidado pessoal e doméstico para marcas de consumo.</span></span></span>
       </a></li>
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-colep-pk-lg.jpg" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-colep-cp-line.jpg" alt="" loading="lazy"></span>
         <span class="label">Embalagem</span>
         <span class="name">Colep Packaging</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <span class="desc"><span><span>Embalagens metálicas e aerossóis para marcas de consumo.</span></span></span>
+        <span class="desc"><span><span>Soluções de embalagem para marcas de consumo e indústria.</span></span></span>
       </a></li>
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-rar-acucar-lg.jpg" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-rar-acucar-layers.jpg" alt="" loading="lazy"></span>
         <span class="label">Açúcar</span>
         <span class="name">RAR Açúcar</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Refinação e comercialização de açúcar em Portugal.</span></span></span>
       </a></li>
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-rar-imob-lg.jpg" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-rar-imob-patio.jpg" alt="" loading="lazy"></span>
         <span class="label">Imobiliário</span>
         <span class="name">RAR Imobiliária</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         <span class="desc"><span><span>Desenvolvimento e gestão de património imobiliário.</span></span></span>
       </a></li>
       <li><a class="co" href="#">
-        <span class="co-media"><img src="assets/co-vitacress-lg.jpg" alt="" loading="lazy"></span>
+        <span class="co-media"><img src="assets/co-vitacress-basil.jpg" alt="" loading="lazy"></span>
         <span class="label">Alimentar · Vegetais frescos</span>
         <span class="name">Vitacress</span>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <span class="desc"><span><span>Saladas, agrião e ervas aromáticas, em Portugal e no Reino Unido.</span></span></span>
+        <span class="desc"><span><span>Produção sustentável de saladas, ervas aromáticas e vegetais frescos prontos a comer.</span></span></span>
       </a></li>
         </ul>
         <a href="#" class="text-link">RAR Holding <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -819,7 +819,7 @@
       if (!entries.some(e => e.isIntersecting)) return;
       seenWorld.disconnect();
       world.classList.add("is-visible");
-    }, { threshold: .35 });
+    }, { threshold: 0, rootMargin: "0px 0px 10% 0px" });
     seenWorld.observe(world);
   }
   function highlight(code) {
@@ -915,11 +915,11 @@
     "Alimentar · Vegetais frescos": "Food · Fresh produce",
     "Fechar": "Close",
     "Importação e distribuição de matérias-primas alimentares.": "Sourcing and distribution of food commodities.",
-    "Produção, por contrato, de produtos de cuidado pessoal e para a casa.": "Contract manufacturing of personal care and household products.",
-    "Embalagens metálicas e aerossóis para marcas de consumo.": "Metal packaging and aerosols for consumer brands.",
+    "Desenvolvimento de produtos de cuidado pessoal e doméstico para marcas de consumo.": "Development of personal care and household products for consumer brands.",
+    "Soluções de embalagem para marcas de consumo e indústria.": "Packaging solutions for consumer brands and industry.",
     "Refinação e comercialização de açúcar em Portugal.": "Sugar refining and distribution in Portugal.",
     "Desenvolvimento e gestão de património imobiliário.": "Real estate development and asset management.",
-    "Saladas, agrião e ervas aromáticas, em Portugal e no Reino Unido.": "Salads, watercress and fresh herbs, in Portugal and the UK.",
+    "Produção sustentável de saladas, ervas aromáticas e vegetais frescos prontos a comer.": "Sustainable production of salads, fresh herbs and vegetables, ready to eat.",
     "Grupo RAR": "RAR Group",
     "Mensagem do Presidente": "Chairman’s Message",
     "Missão e Valores": "Mission and Values",

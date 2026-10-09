@@ -6,6 +6,21 @@
 <title>Grupo RAR</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Mais de seis décadas de experiência a desenvolver negócios em diferentes setores e geografias.">
+<!-- share preview; crawlers need absolute URLs, so these point at the deployed site -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rar-umber.vercel.app/">
+<meta property="og:site_name" content="Grupo RAR">
+<meta property="og:title" content="Grupo RAR — Seis empresas, uma visão.">
+<meta property="og:description" content="Mais de seis décadas de experiência a desenvolver negócios em diferentes setores e geografias.">
+<meta property="og:image" content="https://rar-umber.vercel.app/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Grupo RAR — Seis empresas, uma visão. Sede do grupo no Porto.">
+<meta property="og:locale" content="pt_PT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://rar-umber.vercel.app/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -239,11 +254,11 @@
   }
   .co .label { grid-area: label; }
   .co .name { grid-area: name; margin-top: 6px; font-size: clamp(22px, 1.9vw, 30px); font-weight: 300; letter-spacing: -.025em; line-height: 1.15; }
-  .co .arrow { grid-area: arrow; align-self: end; margin-bottom: 4px; opacity: 0; transform: translateX(-8px); transition: opacity .4s, transform .4s; }
+  .co .arrow { grid-area: arrow; align-self: end; margin-bottom: 4px; transition: transform .7s cubic-bezier(.22, 1, .36, 1); }
   .co .desc { grid-area: desc; padding-top: 8px; max-width: 38ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .co:hover .co-media img, .co:focus-visible .co-media img { transform: scale(1.06); filter: none; }
   .co:hover .co-media::after, .co:focus-visible .co-media::after { opacity: 0; }
-  .co:hover .arrow, .co:focus-visible .arrow { opacity: 1; transform: none; }
+  .co:hover .arrow, .co:focus-visible .arrow { transform: translateX(5px); }
   .companies .text-link { margin-top: clamp(36px, 5vh, 56px); }
 
   /* ---------- SHARED SECTION HEAD ---------- */
@@ -364,8 +379,16 @@
   /* one portrait and his own words: a human face for the group without a gallery of suits */
   /* President: framed portrait beside the quote */
   .president { display: grid; grid-template-columns: var(--portrait-w) minmax(0, 1fr); gap: clamp(32px, 6vw, 120px); align-items: end; }
-  .portrait { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 8px; background: #e7e4de; }
-  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; mix-blend-mode: multiply; filter: contrast(1.02); }
+  /* studio look: the white cut-out multiplies onto a lit paper backdrop that falls off to the edges */
+  .portrait {
+    position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 8px;
+    background: radial-gradient(120% 90% at 50% 28%, #eeebe6 0%, #d9d5ce 45%, #b9b4ab 100%);
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; mix-blend-mode: multiply; filter: contrast(1.06) brightness(.98); }
+  .portrait::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(140% 100% at 50% 30%, transparent 55%, rgba(28, 28, 26, .18) 100%);
+  }
   .president blockquote p:first-child {
     font-weight: 200; font-size: clamp(30px, 3.6vw, 56px); line-height: 1.1; letter-spacing: -.035em;
     text-indent: -.42em; max-width: 22ch;
@@ -449,7 +472,6 @@
     .countries { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; }
     /* the map scales down with the screen; keep its labels readable */
     .map-label { font-size: 17px; letter-spacing: .02em; stroke-width: 6px; }
-    .co .arrow { opacity: 1; transform: none; }
     .footer { grid-template-columns: 1fr 1fr; }
     .footer-brand { grid-column: 1 / -1; }
   }
@@ -665,7 +687,7 @@
   <section class="section" id="presidente" aria-labelledby="presidente-title">
     <div class="section-mark"><span>06</span><span id="presidente-title">Mensagem do Presidente</span></div>
     <div class="president">
-      <span class="portrait"><img src="assets/board-nms-color.jpg" alt="Nuno Macedo Silva" loading="lazy"></span>
+      <span class="portrait"><img src="assets/board-nms-studio.jpg" alt="Nuno Macedo Silva" loading="lazy"></span>
       <figure>
         <blockquote>
           <p>“O Grupo RAR prossegue, de forma prudente, o seu processo de desenvolvimento e consolidação.”</p>

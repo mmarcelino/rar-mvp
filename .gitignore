@@ -9,6 +9,7 @@ assets/*
 !assets/board-gs.jpg
 !assets/board-jhs.jpg
 !assets/board-nms-color.jpg
+!assets/board-nms-studio.jpg
 !assets/board-nms.jpg
 !assets/board-rms.jpg
 !assets/board-vn.jpg
@@ -28,6 +29,7 @@ assets/*
 !assets/hero-2.jpg
 !assets/history-1967.jpg
 !assets/logo.svg
+!assets/og.jpg
 !assets/people-factory.jpg
 !assets/people-field-pt.jpg
 !assets/people-greenhouse.jpg
